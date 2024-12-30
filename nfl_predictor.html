@@ -1,0 +1,153 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NFL Game Predictor</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js">
+<script>
+// Add to existing JavaScript
+async function predictGame() {
+    const team1 = team1Select.value;
+    const team2 = team2Select.value;
+
+    if (!team1 || !team2) {
+        alert('Please select both teams');
+        return;
+    }
+
+    try {
+        // Example prediction request
+        const response = await fetch('${CREATE_URL}/predict', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                YardsPerPlay: 5.0,  // These values would come from team stats
+                RushAttempts: 25,
+                PassAttempts: 35,
+                FirstDowns: 20
+            })
+        });
+
+        const result = await response.json();
+        document.getElementById('predictionResult').innerHTML = 
+            `Predicted Touchdowns: ${result.predicted_touchdowns.toFixed(1)}`;
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error making prediction');
+    }
+}
+</script>
+</script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .team-select { margin: 20px 0; }
+        .visualization { margin: 20px 0; }
+        select { padding: 5px; margin: 5px; }
+        button { padding: 10px; background: #007bff; color: white; border: none; cursor: pointer; }
+        button:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>NFL Game Predictor</h1>
+        
+        <div class="team-select">
+            <h2>Select Teams to Compare</h2>
+            <select id="team1">
+                <option value="">Select Team 1</option>
+            </select>
+            <select id="team2">
+                <option value="">Select Team 2</option>
+            </select>
+            <button onclick="compareTeams()">Compare Teams</button>
+        </div>
+
+        <div class="visualization">
+            <div id="teamComparison"></div>
+            <div id="historicalTrends"></div>
+        </div>
+
+        <div class="prediction">
+            <h2>Game Prediction</h2>
+            <div id="predictionResult"></div>
+        </div>
+    </div>
+
+    <script>
+        // Load team data
+        const teams = ['HOU', 'PIT', 'ARI', 'CHI', 'TB', 'DEN', 'CLE', 'BUF', 'SF', 'SEA', 'BAL', 'PHI',
+                      'CAR', 'WAS', 'TEN', 'NO', 'LA', 'IND', 'NE', 'MIN', 'NYJ', 'JAX', 'CIN', 'ATL',
+                      'KC', 'LV', 'LAC', 'MIA', 'GB', 'DET', 'DAL', 'NYG'];
+
+        // Populate dropdowns
+        const team1Select = document.getElementById('team1');
+        const team2Select = document.getElementById('team2');
+
+        teams.forEach(team => {
+            team1Select.add(new Option(team, team));
+            team2Select.add(new Option(team, team));
+        });
+
+        // Function to compare teams
+        async function compareTeams() {
+            const team1 = team1Select.value;
+            const team2 = team2Select.value;
+
+            if (!team1 || !team2) {
+                alert('Please select both teams');
+                return;
+            }
+
+            // Load comparison visualization
+            const iframe = document.createElement('iframe');
+            iframe.src = 'team_comparison.html';
+            iframe.width = '100%';
+            iframe.height = '800px';
+            iframe.frameBorder = '0';
+
+            const comparisonDiv = document.getElementById('teamComparison');
+            comparisonDiv.innerHTML = '';
+            comparisonDiv.appendChild(iframe);
+        }
+    
+<script>
+// Add to existing JavaScript
+async function predictGame() {
+    const team1 = team1Select.value;
+    const team2 = team2Select.value;
+
+    if (!team1 || !team2) {
+        alert('Please select both teams');
+        return;
+    }
+
+    try {
+        // Example prediction request
+        const response = await fetch('${CREATE_URL}/predict', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                YardsPerPlay: 5.0,  // These values would come from team stats
+                RushAttempts: 25,
+                PassAttempts: 35,
+                FirstDowns: 20
+            })
+        });
+
+        const result = await response.json();
+        document.getElementById('predictionResult').innerHTML = 
+            `Predicted Touchdowns: ${result.predicted_touchdowns.toFixed(1)}`;
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error making prediction');
+    }
+}
+</script>
+</script>
+</body>
+</html>
